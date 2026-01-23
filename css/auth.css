@@ -130,3 +130,25 @@ body {
     margin-bottom: 60px;
     text-align: center;
 }
+
+/* File Upload (Copied from board.css for consistency) */
+.file-upload-wrapper {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.file-upload-btn {
+    padding: 8px 12px;
+    background-color: #e0e0e0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.file-name-display {
+    font-size: 14px;
+    color: #333;
+}

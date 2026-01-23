@@ -55,8 +55,6 @@ function initLoginPage() {
     }
 
     function updateButtonState() {
-        // Requirements say: Change color when BOTH entered and Valid.
-        // We use the 'disabled' attribute to control this mostly, and CSS for color.
         if (isEmailValid && isPasswordValid) {
             loginBtn.disabled = false;
             loginBtn.classList.add('active');
@@ -66,45 +64,36 @@ function initLoginPage() {
         }
     }
 
-    // Input Listeners (Real-time feedback is usually annoying if done on 'input' for errors, 
-    // but requirement 2 says "When both input... valid... button changes". 
-    // This implies real-time checking. 
-    // However, usually helper text appears on blur or failed attempt. 
-    // The prompt image shows helper text visible. I will check on 'input' to be responsive for the button, 
-    // but maybe be less aggressive with helper text? 
-    // Let's stick to 'input' for button state, and maybe 'blur' for error text to be user friendly, 
-    // OR just 'input' for everything to be simple and responsive as per "helper text" requirement usually implies immediate feedback in these coding tests.
-    
-    // Actually, requirement 1 says "If email is empty...". "If invalid...".
-    // I will trigger validation on 'input' to satisfy the button color change requirement immediately.
-    
-    emailInput.addEventListener('input', validateEmail);
-    passwordInput.addEventListener('input', validatePassword);
-
-    // Initial check (in case browser auto-fills)
-    // validateEmail(); 
-    // validatePassword();
-    // Don't validate immediately on load, or it shows red text everywhere. 
-    // Button is disabled by default HTML.
+    if (emailInput) emailInput.addEventListener('input', validateEmail);
+    if (passwordInput) passwordInput.addEventListener('input', validatePassword);
 }
 
 function handleLogin(event) {
     event.preventDefault();
-    
-    // Final validation check before "submit"
-    // Since button is disabled if invalid, this is just a safety net.
-    
-    // Simulate Login Success
-    // In real app, fetch API here.
-    
-    // Redirect to post list
-    // Current path: pages/auth/login.html
-    // Target path: pages/board/post_list.html
-    // Relative: ../board/post_list.html
     location.href = '../board/post_list.html';
+}
+
+// Signup Page Logic
+function initSignupPage() {
+    const signupForm = document.getElementById('signup-form');
+    if (!signupForm) return;
+
+    const fileInput = document.getElementById('profile-file-input');
+    const fileNameDisplay = document.getElementById('profile-file-name');
+
+    if (fileInput && fileNameDisplay) {
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                fileNameDisplay.innerText = e.target.files[0].name;
+            } else {
+                fileNameDisplay.innerText = '파일을 선택해주세요.';
+            }
+        });
+    }
 }
 
 // Init
 document.addEventListener('DOMContentLoaded', () => {
     initLoginPage();
+    initSignupPage();
 });

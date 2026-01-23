@@ -20,9 +20,12 @@
             <!-- Basic scaffolding for signup fields -->
              <div class="input-group">
                 <label class="input-label">프로필 사진</label>
-                <p class="helper-text">* helper text</p>
-                <!-- File input placeholder -->
-                <div style="font-size: 12px; color: #666;">파일 추가 영역 (구현 예정)</div>
+                <p class="helper-text" id="profile-helper">* helper text</p>
+                <div class="file-upload-wrapper">
+                    <label for="profile-file-input" class="file-upload-btn">파일 선택</label>
+                    <input type="file" id="profile-file-input" style="display: none;" accept="image/*">
+                    <span class="file-name-display" id="profile-file-name">파일을 선택해주세요.</span>
+                </div>
             </div>
             
             <div class="input-group">
