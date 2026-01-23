@@ -227,6 +227,14 @@ function createCommentElement(comment) {
 function showDeleteModal(targetType, targetId) {
     currentDeleteTarget = { type: targetType, id: targetId };
     const modal = document.getElementById('delete-modal');
+    const title = document.getElementById('modal-title');
+    
+    if (targetType === 'post') {
+        if (title) title.innerText = '게시글을 삭제하시겠습니까?';
+    } else if (targetType === 'comment') {
+        if (title) title.innerText = '댓글을 삭제하시겠습니까?';
+    }
+
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden'; // Lock scroll
 }
@@ -247,6 +255,7 @@ function confirmDelete() {
     } else if (currentDeleteTarget.type === 'comment') {
         const commentEl = document.getElementById(`comment-${currentDeleteTarget.id}`);
         if (commentEl) commentEl.remove();
+        alert('댓글이 삭제되었습니다.');
         closeDeleteModal();
     }
 }
