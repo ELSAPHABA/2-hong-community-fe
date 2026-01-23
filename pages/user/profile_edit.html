@@ -17,9 +17,51 @@
             </div>
         </div>
     </header>
-    <div class="container">
-        <h2>회원정보 수정 페이지</h2>
+
+    <main class="container">
+        <h2 class="edit-title">회원정보수정</h2>
+
+        <div class="profile-edit-section">
+            <label class="profile-label">프로필 사진*</label>
+            <div class="profile-image-wrapper" onclick="document.getElementById('profile-upload').click()">
+                <img src="https://img.icons8.com/color/96/000000/penguin.png" alt="Profile Image" class="profile-image" id="profile-preview">
+                <div class="profile-image-overlay">변경</div>
+                <input type="file" id="profile-upload" style="display: none;" accept="image/*">
+            </div>
+        </div>
+
+        <form class="user-form" id="profile-edit-form" onsubmit="handleProfileUpdate(event)">
+            <div class="input-group">
+                <label class="input-label">이메일</label>
+                <input type="text" class="user-input" value="startupcode@gmail.com" readonly>
+            </div>
+
+            <div class="input-group">
+                <label class="input-label">닉네임</label>
+                <input type="text" class="user-input" id="nickname" value="스타트업코드" placeholder="닉네임을 입력하세요">
+                <p class="helper-text" id="nickname-helper">*닉네임을 입력해주세요.</p>
+            </div>
+
+            <button type="submit" class="submit-btn">수정하기</button>
+            <button type="button" class="withdraw-btn" onclick="showWithdrawModal()">회원 탈퇴</button>
+        </form>
+    </main>
+
+    <!-- Toast Message -->
+    <div class="toast-message" id="toast">수정 완료</div>
+
+    <!-- Withdraw Modal -->
+    <div class="modal-overlay" id="withdraw-modal">
+        <div class="modal-content">
+            <h3 class="modal-title">회원탈퇴 하시겠습니까?</h3>
+            <p class="modal-desc">작성된 게시글과 댓글은 삭제됩니다.</p>
+            <div class="modal-buttons">
+                <button class="btn-cancel" onclick="closeWithdrawModal()">취소</button>
+                <button class="btn-confirm" onclick="confirmWithdraw()">확인</button>
+            </div>
+        </div>
     </div>
+
     <script src="../../js/common.js"></script>
     <script src="../../js/user.js"></script>
 </body>

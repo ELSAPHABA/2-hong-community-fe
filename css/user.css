@@ -1,1 +1,145 @@
 /* User Profile Styles */
+
+/* Profile Edit Specifics */
+.profile-edit-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.profile-label {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    align-self: flex-start;
+    margin-left: 20px; /* Align with form if needed, or centered */
+}
+
+/* Centering the label might be better if the image is centered */
+.profile-edit-section .profile-label {
+    align-self: flex-start; /* Or center? Image shows label '프로필 사진*' left aligned relative to something? */
+    /* Let's follow the container padding */
+    margin-left: 0;
+}
+
+.profile-image-wrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid rgba(255,255,255,0.5);
+    border-radius: 50%;
+}
+
+/* Reuse auth form styles or create similar user-form styles */
+.user-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #333;
+}
+
+.user-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+}
+
+.user-input:read-only {
+    background-color: #ffffff; /* Or keep f9f9f9? Image shows plain text like. */
+    border: none;
+    padding-left: 0;
+    font-weight: 500;
+}
+
+.user-input:focus {
+    outline: none;
+    border-color: #ACA0EB;
+    background-color: white;
+}
+
+.helper-text {
+    font-size: 12px;
+    color: red;
+    margin-top: 4px;
+    display: none;
+}
+
+.helper-text.visible {
+    display: block;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #ACA0EB;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: #7F6AEE;
+}
+
+.withdraw-btn {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+    margin-top: 15px;
+    align-self: center; /* Center in flex column */
+}
+
+.withdraw-btn:hover {
+    color: #000;
+}
