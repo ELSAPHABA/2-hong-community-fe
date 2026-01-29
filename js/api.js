@@ -1,6 +1,16 @@
 // js/api.js
 
-const BASE_URL = "http://localhost:8000";
+// Determine BASE_URL dynamically to match the current hostname (localhost or 127.0.0.1)
+// This prevents SameSite cookie blocking when the frontend is on 127.0.0.1 and backend is hardcoded to localhost.
+const getBaseUrl = () => {
+    const hostname = window.location.hostname;
+    if (hostname === '127.0.0.1') {
+        return "http://127.0.0.1:8000";
+    }
+    return "http://localhost:8000";
+};
+
+const BASE_URL = getBaseUrl();
 const STORAGE_KEYS = {
     USER_INFO: 'userInfo'
 };
