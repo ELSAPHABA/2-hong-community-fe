@@ -137,6 +137,18 @@ async function handleSignup(event) {
             alert('이미 사용 중인 이메일입니다.');
         } else if (error.code === 'NICKNAME_ALREADY_EXISTS') {
             alert('이미 사용 중인 닉네임입니다.');
+        } else if (error.data) {
+            // 유효성 검사 에러 상세 표시
+            // error.data가 객체인 경우 메시지 추출
+            let msg = '';
+            if (typeof error.data === 'object') {
+                for (const key in error.data) {
+                    msg += `${key}: ${error.data[key]}\n`;
+                }
+            } else {
+                msg = JSON.stringify(error.data);
+            }
+            alert(`입력값이 올바르지 않습니다.\n${msg}`);
         } else {
             alert('회원가입 중 오류가 발생했습니다.');
         }
