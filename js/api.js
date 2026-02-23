@@ -11,9 +11,33 @@ const getBaseUrl = () => {
 };
 
 const BASE_URL = getBaseUrl();
+const LAMBDA_URL = "https://9721v3yt5h.execute-api.ap-northeast-2.amazonaws.com/upload/image";
+
 const STORAGE_KEYS = {
     USER_INFO: 'userInfo'
 };
+
+/**
+ * Lambda 전용 이미지 업로드 함수
+ */
+async function uploadToLambda(formData, type) {
+    const url = `${LAMBDA_URL}?type=${type}`;
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            body: formData,
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw { status: response.status, ...data };
+        }
+        return data;
+    } catch (error) {
+        console.error(`Lambda Upload Error (${type}):`, error);
+        throw error;
+    }
+}
 
 /**
  * Fetch API Wrapper
@@ -105,11 +129,8 @@ const API = {
             method: 'PATCH',
             body: JSON.stringify(data)
         }),
-        // 프로필 이미지 업로드 (FormData)
-        uploadProfileImage: (formData) => fetchAPI('/v1/users/me/profile-image', {
-            method: 'POST',
-            body: formData
-        }),
+        // 프로필 이미지 업로드 (Lambda 사용)
+        uploadProfileImage: (formData) => uploadToLambda(formData, 'profile'),
         // 회원 탈퇴
         withdraw: () => fetchAPI('/v1/users/me', { method: 'DELETE' }),
     },
@@ -130,11 +151,8 @@ const API = {
         }),
         // 게시글 삭제
         delete: (postId) => fetchAPI(`/v1/posts/${postId}`, { method: 'DELETE' }),
-        // 게시글 이미지 업로드 (FormData)
-        uploadImage: (formData) => fetchAPI('/v1/posts/image', {
-            method: 'POST',
-            body: formData
-        }),
+        // 게시글 이미지 업로드 (Lambda 사용)
+        uploadImage: (formData) => uploadToLambda(formData, 'post'),
         // 좋아요
         like: (postId) => fetchAPI(`/v1/posts/${postId}/likes`, { method: 'POST' }),
         // 좋아요 취소

@@ -36,7 +36,10 @@ async function initProfileEdit() {
             nicknameInput.dataset.original = user.nickname; // Store for dup check
         }
         if (profilePreview && user.profileImageUrl) {
-            if (user.profileImageUrl.startsWith('/')) {
+            // S3 URL인지 로컬 경로인지 판단하여 이미지 표시
+            if (user.profileImageUrl.startsWith('http')) {
+                profilePreview.src = user.profileImageUrl;
+            } else if (user.profileImageUrl.startsWith('/')) {
                 profilePreview.src = `${window.BASE_URL}${user.profileImageUrl}`;
             } else {
                 profilePreview.src = user.profileImageUrl;
@@ -111,9 +114,9 @@ async function handleProfileUpdate(event) {
         let profileImageUrl = null;
         if (profileUpload.files.length > 0) {
             const formData = new FormData();
-            formData.append('profileImage', profileUpload.files[0]);
+            formData.append('file', profileUpload.files[0]); // Use 'file' as key
             const imgRes = await API.users.uploadProfileImage(formData);
-            profileImageUrl = imgRes.data.profileImageUrl;
+            profileImageUrl = imgRes.data.filePath; // Use 'filePath' from Lambda response
         }
 
         // 3. Update Info

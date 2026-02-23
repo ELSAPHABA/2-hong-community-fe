@@ -520,13 +520,14 @@ async function confirmDelete() {
 async function uploadImage(file) {
     if (!file) return null;
     const formData = new FormData();
-    formData.append('postFile', file);
+    formData.append('file', file); // Use 'file' as key
     const response = await API.posts.uploadImage(formData);
     
     if (!response || !response.data) {
         throw new Error('Image upload response invalid');
     }
-    return response.data.postFileUrl; 
+    // Lambda returns the URL in 'filePath'
+    return response.data.filePath; 
 }
 
 // Edit Page Logic
