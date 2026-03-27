@@ -1,13 +1,19 @@
 // js/api.js
 
-// Determine BASE_URL dynamically to match the current hostname (localhost or 127.0.0.1)
-// This prevents SameSite cookie blocking when the frontend is on 127.0.0.1 and backend is hardcoded to localhost.
+// Determine BASE_URL automatically for both local development and Nginx proxy
 const getBaseUrl = () => {
     const hostname = window.location.hostname;
-    if (hostname === '127.0.0.1') {
-        return "http://127.0.0.1:8000";
+    const port = window.location.port;
+
+    // 1. Local development (e.g., VS Code Live Server on port 5500)
+    // If running on localhost/127.0.0.1 and port is not 80 (Nginx), point to backend port 8000 directly.
+    if ((hostname === 'localhost' || hostname === '127.0.0.1') && port !== '' && port !== '80') {
+        return "http://localhost:8000";
     }
-    return "http://localhost:8000";
+
+    // 2. Production (EC2) or Local Docker environment (via Nginx proxy on port 80)
+    // Nginx handles the /v1/ proxying, so we use relative paths.
+    return "";
 };
 
 const BASE_URL = getBaseUrl();
